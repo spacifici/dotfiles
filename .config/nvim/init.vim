@@ -39,6 +39,11 @@ Plug 'WolfgangMehner/c-support'
 " ag
 Plug 'numkil/ag.nvim'
 
+" Markdown support
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+
 call plug#end()
 
 " Use deoplete
