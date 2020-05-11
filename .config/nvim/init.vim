@@ -44,6 +44,9 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
+" vimwiki
+Plug 'vimwiki/vimwiki'
+
 call plug#end()
 
 " Use deoplete
@@ -84,6 +87,10 @@ let g:airline_powerline_fonts = 1
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:DevIconsEnableFoldersOpenClose = 1
 
+" vimwiki
+let g:vimwiki_list = [{'path': '~/.vimwiki/', 'index': 'Home',
+                        \ 'syntax': 'markdown', 'ext': '.md'}]
+
 " General options
 set number relativenumber
 set colorcolumn=80
@@ -93,11 +100,12 @@ set cursorline
 set tabstop=4
 set shiftwidth=4
 set expandtab
+filetype plugin on
 filetype plugin indent on
 
 " Key mappings
 map <silent> <Leader>' :NERDTreeToggle<CR>
-map <silent> <Leader>f :FZF<CR>
+map <silent> <Leader>z :FZF<CR>
 
 " Auto commands
 au BufRead,BufNewFile *.jsm setlocal ft=javascript
