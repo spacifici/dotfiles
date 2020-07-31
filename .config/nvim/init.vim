@@ -14,8 +14,8 @@ endif
 Plug 'junegunn/fzf'
 
 "Code completion with Deoplete - enabled by ensime
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'wellle/tmux-complete.vim'
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'wellle/tmux-complete.vim'
 
 " NERDTree
 Plug 'scrooloose/nerdtree'
@@ -47,14 +47,20 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 " vimwiki
 Plug 'vimwiki/vimwiki'
 
+" coc-nvim (LSP for nvim)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" fugitive
+Plug 'tpope/vim-fugitive'
+
 call plug#end()
 
 " Use deoplete
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('sources', {
-            \ '_' : ['buffer', 'member', 'tag', 'file', 'omni', 'ultisnips', 'tmux-complete']
-            \})
-let g:tmuxcomplete#trigger = ''
+"let g:deoplete#enable_at_startup = 1
+"call deoplete#custom#option('sources', {
+"            \ '_' : ['buffer', 'member', 'tag', 'file', 'omni', 'ultisnips', 'tmux-complete']
+"            \})
+"let g:tmuxcomplete#trigger = ''
 
 " Easier split navigations
 nnoremap <C-J> <C-W><C-J>

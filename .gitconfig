@@ -21,6 +21,7 @@
 	prompt = false
 [core]
 	editor = vim
+	excludesfile = /home/stefano/.gitignore_global
 [push]
 	default = simple
 [merge]
