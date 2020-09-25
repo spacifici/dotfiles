@@ -78,7 +78,7 @@ nnoremap <A-l> <C-w>l
 
 
 " nerdtree git plugin
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",
     \ "Untracked" : "✭",
