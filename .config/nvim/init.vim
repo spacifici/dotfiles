@@ -126,5 +126,3 @@ map <silent> <Leader>z :FZF<CR>
 au BufRead,BufNewFile *.jsm setlocal ft=javascript
 au BufRead,BufNewFile *.sc setlocal ft=scala
 au Filetype nerdtree setlocal nolist
-au Filetype javascript set ts=2 sw=2
-au Filetype html set ts=2 sw=2
