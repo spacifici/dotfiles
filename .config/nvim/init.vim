@@ -53,6 +53,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " fugitive
 Plug 'tpope/vim-fugitive'
 
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+
 call plug#end()
 
 " Use deoplete
@@ -115,6 +117,7 @@ set cursorline
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set termguicolors
 filetype plugin on
 filetype plugin indent on
 
