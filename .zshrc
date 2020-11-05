@@ -58,6 +58,10 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+function gch() {
+    git checkout $(git branch -a --no-color|fzf|tr -d '[:space:]')
+}
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
