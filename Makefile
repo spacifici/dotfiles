@@ -1,13 +1,13 @@
 executables:=curl gunzip tar sha1sum
 
 makedir:=$(shell cd $(shell dirname $(MAKEFILE_LIST));pwd)
-dotfiles:=$(patsubst dotfiles/%,$(HOME)/.%,$(shell find dotfiles/ -type f))
 scriptsdir:=$(makedir)/scripts
 optdir=${HOME}/opt
 
 
 # Helpers scripts
 test_sh=$(scriptsdir)/test.sh
+install_dotfiles_sh=$(scriptsdir)/install_dotfiles.sh
 
 install: exc:=$(foreach exec,$(executables),\
 	$(if $(shell which $(exec)),no error,$(error "No $(exec) installed")))
@@ -20,7 +20,7 @@ $(optdir):
 
 .PHONY: install-dotfiles
 install-dotfiles:
-	for dotfile in $(dotfiles); do echo $${dotfile}; done
+	@${install_dotfiles_sh}
 
 nvimbin:=${optdir}/nvim-linux64/bin/nvim
 

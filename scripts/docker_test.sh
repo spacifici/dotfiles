@@ -39,8 +39,8 @@ check_dotfile() {
         echo "${dst} doesn't exist"
         return 1
     fi
-    srcsum=$(sha1sum "${src}")
-    dstsum=$(sha1sum "${dst}")
+    srcsum=$(sha1sum "${src}"|cut -f1 -d' ')
+    dstsum=$(sha1sum "${dst}"|cut -f1 -d' ')
     if [ "${srcsum}" == "${dstsum}" ]; then
         echo "OK"
     else
@@ -55,9 +55,12 @@ run_make_install() {
 }
 
 run_tests() {
+    # Need to source the profile to get the update PATH
+    source "${HOME}/.profile"
+    check_dotfile "No message" "bashrc"
+    check_dotfile "No message" "config/nvim/init.vim"
     check_path "Neovim is not correctly installed" "${HOME}/opt/nvim-linux64/bin/nvim"
     check_command "Neovim is not correctly installed" nvim "${HOME}/opt/nvim-linux64/bin/nvim"
-    check_dotfile "No message" "bashrc"
 }
 
 while getopts ":ati" opt; do
@@ -81,7 +84,7 @@ done
 case "${mode}" in
     "${MODE_ALL}" )
         run_make_install
-        exec /bin/bash -l $0
+        env -i - HOME=/root /bin/bash -l $0
         ;;
     "${MODE_INTERACTIVE}" )
         echo "Running interactive"
