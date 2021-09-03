@@ -1,4 +1,4 @@
-executables:=curl gunzip tar
+executables:=curl gunzip tar sha1sum
 
 makedir:=$(shell cd $(shell dirname $(MAKEFILE_LIST));pwd)
 dotfiles:=$(patsubst dotfiles/%,$(HOME)/.%,$(shell find dotfiles/ -type f))

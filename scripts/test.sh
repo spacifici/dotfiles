@@ -13,4 +13,4 @@ else
 fi
 
 # Run the docker container
-docker run --rm -ti -v "${dockerFileAbsPath}:/src" "dotfiles:latest" /src/scripts/docker_test.sh
+docker run --rm -ti -v "${dockerFileAbsPath}:/src" "dotfiles:latest" /src/scripts/docker_test.sh -a
