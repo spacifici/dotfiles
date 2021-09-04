@@ -12,6 +12,12 @@ backup() {
     cp "$f" "$b"
 }
 
+# install <src> <dst>
+install() {
+    mkdir -p "$(dirname "$2")"
+    ln -s "$1" "$2"
+}
+
 # For each dotfile...
 for dotfile in ${DOTFILES}; do
     echo -n "Installing ${dotfile}... "
@@ -26,6 +32,6 @@ for dotfile in ${DOTFILES}; do
         rm -f "${dst}"
     fi
     # Install the link
-    ln -s "${src}" "${dst}"
+    install "${src}" "${dst}"
     echo "OK"
 done
