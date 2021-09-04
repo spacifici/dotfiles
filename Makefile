@@ -11,7 +11,7 @@ install_dotfiles_sh=$(scriptsdir)/install_dotfiles.sh
 
 install: exc:=$(foreach exec,$(executables),\
 	$(if $(shell which $(exec)),no error,$(error "No $(exec) installed")))
-install: install-nvim install-dotfiles
+install: install-nvim install-fzf install-dotfiles
 	@echo "Installed"
 
 $(optdir):
@@ -21,6 +21,16 @@ $(optdir):
 .PHONY: install-dotfiles
 install-dotfiles:
 	@${install_dotfiles_sh}
+
+fzfbin:=${HOME}/bin/fzf
+$(fzfbin): tmpfile=/tmp/fzf.tgz
+$(fzfbin):
+	curl -L "https://github.com/junegunn/fzf/releases/download/0.27.2/fzf-0.27.2-linux_amd64.tar.gz" -o ${tmpfile}
+	mkdir -p ${HOME}/bin
+	tar xf ${tmpfile} -C ${HOME}/bin
+	rm -f ${tmpfile}
+
+install-fzf: $(fzfbin)
 
 nvimbin:=${optdir}/nvim-linux64/bin/nvim
 

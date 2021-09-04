@@ -60,7 +60,9 @@ run_tests() {
     check_dotfile "No message" "bashrc"
     check_dotfile "No message" "config/nvim/init.vim"
     check_path "Neovim is not correctly installed" "${HOME}/opt/nvim-linux64/bin/nvim"
+    check_path "fzf is not correctly installed" "${HOME}/bin/fzf"
     check_command "Neovim is not correctly installed" nvim "${HOME}/opt/nvim-linux64/bin/nvim"
+    check_command "fzf is not correctly installed" fzf "${HOME}/bin/fzf"
 }
 
 while getopts ":ati" opt; do
@@ -88,6 +90,8 @@ case "${mode}" in
         ;;
     "${MODE_INTERACTIVE}" )
         echo "Running interactive"
+        run_make_install
+        exec /bin/bash -l
         ;;
     * )
         echo "Running tests"
