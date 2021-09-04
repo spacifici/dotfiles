@@ -1,4 +1,5 @@
 executables:=curl gunzip tar sha1sum
+fzf_version:=0.27.2
 
 makedir:=$(shell cd $(shell dirname $(MAKEFILE_LIST));pwd)
 scriptsdir:=$(makedir)/scripts
@@ -22,15 +23,25 @@ $(optdir):
 install-dotfiles:
 	@${install_dotfiles_sh}
 
-fzfbin:=${HOME}/bin/fzf
-$(fzfbin): tmpfile=/tmp/fzf.tgz
-$(fzfbin):
-	curl -L "https://github.com/junegunn/fzf/releases/download/0.27.2/fzf-0.27.2-linux_amd64.tar.gz" -o ${tmpfile}
+fzf_bin:=${HOME}/bin/fzf
+fzf_files:=$(foreach f,\
+	completion.bash completion.zsh key-bindings.bash key-bindings.zsh,\
+	${HOME}/.fzf/${f})
+${HOME}/.fzf/%: url=https://raw.githubusercontent.com/junegunn/fzf/${fzf_version}/shell
+${HOME}/.fzf/%: file_name=$(shell basename $@)
+${HOME}/.fzf/%:
+	mkdir -p ${HOME}/.fzf
+	curl -L "${url}/${file_name}" -o $@
+
+$(fzf_bin): tmpfile=/tmp/fzf.tgz
+$(fzf_bin): fzf_url=https://github.com/junegunn/fzf/releases/download/${fzf_version}/fzf-${fzf_version}-linux_amd64.tar.gz
+$(fzf_bin): $(fzf_files)
+	curl -s -L "${fzf_url}" -o ${tmpfile}
 	mkdir -p ${HOME}/bin
 	tar xf ${tmpfile} -C ${HOME}/bin
 	rm -f ${tmpfile}
 
-install-fzf: $(fzfbin)
+install-fzf: $(fzf_bin)
 
 nvimbin:=${optdir}/nvim-linux64/bin/nvim
 
@@ -85,12 +96,12 @@ debug:
 # # fzf #
 # #######
 # fzfpath=${vardir}/fzf
-# fzfbin=${fzfpath}/bin/fzf
+# fzf_bin=${fzfpath}/bin/fzf
 # 
 # .PHONY: fzf
-# fzf: ${fzfbin}
+# fzf: ${fzf_bin}
 # 
-# ${fzfbin}: ${fzfpath}
+# ${fzf_bin}: ${fzfpath}
 # 	@${fzfpath}/install --bin
 # 
 # ${fzfpath}:
