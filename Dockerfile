@@ -4,7 +4,8 @@ RUN apt-get update && \
     apt-get install -y \
         curl \
         locales \
-        make && \
+        make \
+        zsh && \
     locale-gen en_US.UTF-8 && \
     mkdir -p /root/.ssh && \
     chmod 700 /root/.ssh && \
