@@ -17,10 +17,11 @@ check_path() {
     fi
 }
 
-# check_command <error_msg> <command> <expected_result>
+# check_command <error_msg> <command>
 check_command() {
     echo -n "Checking $2 command... "
-    if [ "$(which $2)" == "$3" ]; then
+    result=$(env -i HOME=~ /bin/bash -l -c "compgen -c|grep $2")
+    if [ "${result}" == "$2" ]; then
         echo "OK"
     else
         echo "${1}"
@@ -55,14 +56,13 @@ run_make_install() {
 }
 
 run_tests() {
-    # Need to source the profile to get the update PATH
-    source "${HOME}/.profile"
+    check_dotfile "No message" "profile"
     check_dotfile "No message" "bashrc"
     check_dotfile "No message" "config/nvim/init.vim"
     check_path "Neovim is not correctly installed" "${HOME}/opt/nvim-linux64/bin/nvim"
     check_path "fzf is not correctly installed" "${HOME}/bin/fzf"
-    check_command "Neovim is not correctly installed" nvim "${HOME}/opt/nvim-linux64/bin/nvim"
-    check_command "fzf is not correctly installed" fzf "${HOME}/bin/fzf"
+    check_command "Neovim is not correctly installed" nvim
+    check_command "fzf is not correctly installed" fzf
 }
 
 while getopts ":ati" opt; do
