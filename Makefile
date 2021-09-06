@@ -28,6 +28,7 @@ fzf_bin:=${HOME}/bin/fzf
 fzf_files:=$(foreach f,\
 	completion.bash completion.zsh key-bindings.bash key-bindings.zsh,\
 	${HOME}/.fzf/${f})
+
 ${HOME}/.fzf/%: url=https://raw.githubusercontent.com/junegunn/fzf/${fzf_version}/shell
 ${HOME}/.fzf/%: file_name=$(shell basename $@)
 ${HOME}/.fzf/%:
@@ -62,6 +63,9 @@ install-nvim: $(optdir) $(nvim_bin)
 
 test:
 	@${test_sh}
+
+try-it:
+	@${test_sh} -i
 
 debug:
 	$(foreach v,$(MAKECMDGOALS), \

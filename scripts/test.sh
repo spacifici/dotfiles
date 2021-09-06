@@ -1,4 +1,6 @@
 #!/bin/bash
+declare -r MODE_INTERACTIVE="interactive"
+declare -r MODE_TEST="test"
 
 dockerFileRelPath="$(dirname $0)/../"
 dockerFileAbsPath="$(cd "${dockerFileRelPath}"; pwd)"
@@ -12,5 +14,26 @@ else
 	echo "The image exists"
 fi
 
-# Run the docker container
-docker run --rm -ti -v "${dockerFileAbsPath}:/src" "dotfiles:latest" /src/scripts/docker_test.sh -a
+
+mode="${MODE_TEST}"
+while getopts ':i' opt; do
+	case "${opt}" in
+		i )
+			mode="$MODE_INTERACTIVE"
+			;;
+		\? )
+			echo "Invalid option: -${OPTARG}" 1>&2
+			exit 1
+			;;
+	esac
+done
+
+case "${mode}" in
+	"${MODE_INTERACTIVE}" )
+		docker run --rm -ti -v "${dockerFileAbsPath}:/src" "dotfiles:latest" /src/scripts/docker_test.sh -i
+		;;
+	* )
+		# Run the docker container
+		docker run --rm -ti -v "${dockerFileAbsPath}:/src" "dotfiles:latest" /src/scripts/docker_test.sh -a
+		;;
+esac
