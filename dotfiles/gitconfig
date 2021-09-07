@@ -1,0 +1,26 @@
+[user]
+	email = stefano.pacifici@gmail.com
+	name = Stefano Pacifici
+[color]
+	ui = always
+	status = always
+[diff]
+	tool = vimdiff
+	renameLimit = 40000
+[difftool]
+	prompt = false
+[core]
+	editor = vim
+[push]
+	default = simple
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+	renamelimit = 20000
+[mergetool]
+	prompt = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

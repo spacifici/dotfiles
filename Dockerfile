@@ -3,8 +3,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y \
         curl \
+        git \
         locales \
         make \
+        tmux \
         zsh && \
     locale-gen en_US.UTF-8 && \
     mkdir -p /root/.ssh && \
