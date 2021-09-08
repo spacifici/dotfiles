@@ -1,4 +1,4 @@
-executables:=curl gunzip tar sha1sum
+executables:=curl gunzip tar sha1sum git
 fzf_version:=0.27.2
 neovim_version:=v0.5.0
 
@@ -59,7 +59,13 @@ $(nvim_bin):
 	@rm -f ${tmpfile}
 	@echo "OK"
 
-install-nvim: $(optdir) $(nvim_bin)
+packer_nvim_repo="https://github.com/wbthomason/packer.nvim"
+packer_nvim_path="${HOME}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+
+$(packer_nvim_path):
+	git clone --depth 1 ${packer_nvim_repo} ${packer_nvim_path}
+
+install-nvim: $(optdir) $(nvim_bin) $(packer_nvim_path)
 
 test:
 	@${test_sh}

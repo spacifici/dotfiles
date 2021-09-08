@@ -2,6 +2,8 @@ local o = vim.o
 local w = vim.wo
 local b = vim.bo
 
+require('plugins')
+
 -- Global options
 o.cursorline=true
 o.termguicolors=true

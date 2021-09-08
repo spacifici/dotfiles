@@ -116,7 +116,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
 # fzf auto-completion
 # ---------------
 [[ $- == *i* ]] && source "${HOME}/.fzf/completion.bash" 2> /dev/null
@@ -124,3 +123,7 @@ fi
 # fzf key bindings
 # ------------
 source "${HOME}/.fzf/key-bindings.bash"
+
+# neovim aliases
+alias vi='nvim'
+alias vim='nvim'
