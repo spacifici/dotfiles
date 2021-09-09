@@ -25,9 +25,6 @@ w.colorcolumn="80"
 -- FZF shortcut
 u.map('n', '<Leader>f', ':FZF<cr>')
 
--- filetype plugin on
--- filetype plugin indent on
-
 -- Easier split navigations
 u.map('t', '<C-h>', '<C-\\><C-N><C-w>h', { noremap = true })
 u.map('t', '<C-j>', '<C-\\><C-N><C-w>j', { noremap = true })
@@ -41,4 +38,9 @@ u.map('n', '<C-h>', '<C-w>h', { noremap = true })
 u.map('n', '<C-j>', '<C-w>j', { noremap = true })
 u.map('n', '<C-k>', '<C-w>k', { noremap = true })
 u.map('n', '<C-l>', '<C-w>l', { noremap = true })
+
+u.colorscheme('seoul256')
+
+-- filetype plugin on
+-- filetype plugin indent on
 

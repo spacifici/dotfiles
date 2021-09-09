@@ -11,4 +11,6 @@ return require('packer').startup(function()
     -- vim-tmux-navigator
     use 'christoomey/vim-tmux-navigator'
 
+    -- seoul256 color scheme
+    use 'junegunn/seoul256.vim'
 end)

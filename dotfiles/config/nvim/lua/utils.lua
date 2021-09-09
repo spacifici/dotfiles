@@ -7,4 +7,8 @@ function M.map(mode, keys, action, options)
     vim.api.nvim_set_keymap(mode, keys, action, options)
 end
 
+function M.colorscheme(name)
+    vim.cmd('colorscheme '..name)
+end
+
 return M
