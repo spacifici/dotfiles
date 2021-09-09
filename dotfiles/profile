@@ -26,5 +26,5 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-PATH="$HOME/opt/nvim-linux64/bin:$PATH"
+PATH="$HOME/.cargo/bin:$HOME/opt/nvim-linux64/bin:$PATH"
 EDITOR="nvim"

@@ -13,7 +13,7 @@ install_dotfiles_sh=$(scriptsdir)/install_dotfiles.sh
 
 install: exc:=$(foreach exec,$(executables),\
 	$(if $(shell which $(exec)),no error,$(error "No $(exec) installed")))
-install: install-nvim install-fzf install-dotfiles
+install: install-nvim install-fzf install-rustup install-dotfiles
 	@echo "Installed"
 
 $(optdir):
@@ -65,8 +65,15 @@ packer_nvim_path="${HOME}/.local/share/nvim/site/pack/packer/start/packer.nvim"
 $(packer_nvim_path):
 	git clone --depth 1 ${packer_nvim_repo} ${packer_nvim_path}
 
+.PHONY: install-nvim
 install-nvim: $(optdir) $(nvim_bin) $(packer_nvim_path)
 
+.PHONY: install-rustup
+install-rustup: tmpfile=/tmp/rustup-installer.sh
+install-rustup:
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o ${tmpfile}
+	sh ${tmpfile} -y -q --no-modify-path
+	rm ${tmpfile}
 test:
 	@${test_sh}
 
