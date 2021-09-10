@@ -26,5 +26,10 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-PATH="$HOME/.cargo/bin:$HOME/opt/nvim-linux64/bin:$PATH"
+# set PATH so it includes .cargo/bin if it exists
+if [ -d "$HOME/.cargo/bin" ] ; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+PATH="$HOME/opt/nvim-linux64/bin:$PATH"
 EDITOR="nvim"
