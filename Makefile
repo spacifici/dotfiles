@@ -7,6 +7,9 @@ scriptsdir:=$(makedir)/scripts
 cachedir:=$(makedir)/cache
 optdir=${HOME}/opt
 
+arch:=$(shell uname -m)
+os:=$(shell uname -s | tr [:upper:] [:lower:])
+
 
 # Helpers scripts
 test_sh=$(scriptsdir)/test.sh
@@ -31,8 +34,9 @@ install-dotfiles:
 # {{{ FZF
 
 # FZF binary files
+fzf_arch:=$(if $(subst x86_64,,${arch}),$(error "Unknown arch: ${arch}"),amd64)
 fzf_bin_dst:=${HOME}/bin/fzf
-fzf_release_url:=https://github.com/junegunn/fzf/releases/download/${fzf_version}/fzf-${fzf_version}-linux_amd64.tar.gz
+fzf_release_url:=https://github.com/junegunn/fzf/releases/download/${fzf_version}/fzf-${fzf_version}-${os}_${fzf_arch}.tar.gz
 fzf_bin_cache:=${cachedir}/fzf-${fzf_version}.tgz
 
 ${fzf_bin_cache}:
