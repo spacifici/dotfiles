@@ -113,9 +113,16 @@ ${nvim_install_dir}: ${nvim_cache_file}
 # {{{ packer.nvim
 packer_nvim_repo="https://github.com/wbthomason/packer.nvim"
 packer_nvim_path="${HOME}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+packer_nvim_cache=${cachedir}/packer.vim
 
-$(packer_nvim_path):
-	git clone --depth 1 ${packer_nvim_repo} ${packer_nvim_path}
+.SECONDARY: ${packer_nvim_cache}
+${packer_nvim_cache}:
+	git clone --depth 1 ${packer_nvim_repo} $@
+
+${packer_nvim_path}: dstdir=$(shell dirname ${packer_nvim_path})
+${packer_nvim_path}: ${packer_nvim_cache}
+	mkdir -p ${dstdir}
+	cp -a $< $@
 # }}}
 
 .PHONY: install-nvim
