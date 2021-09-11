@@ -19,7 +19,7 @@ install_dotfiles_sh=$(scriptsdir)/install_dotfiles.sh
 .PHONY: install
 install: exc:=$(foreach exec,$(executables),\
 	$(if $(shell which $(exec)),no error,$(error "No $(exec) installed")))
-install: install-nvim install-fzf install-ripgrep install-dotfiles
+install: install-nvim install-fzf install-ripgrep install-oh-my-zsh install-dotfiles
 
 $(optdir):
 	mkdir -p ${optdir}
@@ -127,6 +127,20 @@ ${packer_nvim_path}: ${packer_nvim_cache}
 
 .PHONY: install-nvim
 install-nvim: ${nvim_install_dir} ${packer_nvim_path}
+# }}}
+
+# {{{ oh-my-zsh
+omz_dst:=${HOME}/.oh-my-zsh
+omz_repo_url:=https://github.com/ohmyzsh/ohmyzsh.git
+omz_cache_dir:=${cachedir}/oh-my-zsh
+
+${omz_cache_dir}:
+	git clone ${omz_repo_url} $@
+${omz_dst}: ${omz_cache_dir}
+	cp -a $< $@
+
+.PHONY: install-oh-my-zsh
+install-oh-my-zsh: ${omz_dst}
 # }}}
 
 # {{{ rustup (optional)
