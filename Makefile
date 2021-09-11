@@ -136,11 +136,24 @@ omz_cache_dir:=${cachedir}/oh-my-zsh
 
 ${omz_cache_dir}:
 	git clone ${omz_repo_url} $@
+
 ${omz_dst}: ${omz_cache_dir}
 	cp -a $< $@
 
+# {{{ zsh-completion
+omz_comp_dst:=${omz_dst}/plugins
+omz_comp_repo_url:=https://github.com/zsh-users/zsh-completions.git
+omz_comp_cache_dir:=${cachedir}/zsh-completions
+
+${omz_comp_cache_dir}:
+	git clone ${omz_comp_repo_url} ${omz_comp_cache_dir}
+
+${omz_comp_dst}: ${omz_dst} ${omz_comp_cache_dir}
+	cp -a ${omz_comp_cache_dir} ${omz_comp_dst}
+# }}}
+
 .PHONY: install-oh-my-zsh
-install-oh-my-zsh: ${omz_dst}
+install-oh-my-zsh: ${omz_dst} ${omz_comp_dst}
 # }}}
 
 # {{{ rustup (optional)
@@ -163,6 +176,7 @@ try-it:
 
 # }}}
 
+.PHONY: debug
 debug:
-	$(foreach v,$(MAKECMDGOALS), \
+	$(foreach v,$(wordlist 2,100,$(MAKECMDGOALS)), \
 		$(warning $(v) = $($v)))
