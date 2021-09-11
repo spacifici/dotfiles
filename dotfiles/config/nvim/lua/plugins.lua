@@ -13,4 +13,8 @@ return require('packer').startup(function()
 
     -- seoul256 color scheme
     use 'junegunn/seoul256.vim'
+
+    -- vim-airline
+    use 'vim-airline/vim-airline'
+    use 'vim-airline/vim-airline-themes'
 end)

@@ -41,6 +41,10 @@ u.map('n', '<C-l>', '<C-w>l', { noremap = true })
 
 u.colorscheme('seoul256')
 
+-- vim-airline config
+g.airline_powerline_fonts = 1
+g['airline#extensions#tabline#enabled'] = 1
+
 -- filetype plugin on
 -- filetype plugin indent on
 
