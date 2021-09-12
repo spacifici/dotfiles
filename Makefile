@@ -2,6 +2,7 @@ executables:=curl gunzip tar sha1sum git
 fzf_version:=0.27.2
 neovim_version:=v0.5.0
 rg_version:=13.0.0
+rust_analyzer_version:=2021-09-06
 
 makedir:=$(shell cd $(shell dirname $(MAKEFILE_LIST));pwd)
 scriptsdir:=$(makedir)/scripts
@@ -156,13 +157,34 @@ ${omz_comp_dst}: ${omz_dst} ${omz_comp_cache_dir}
 install-oh-my-zsh: ${omz_dst} ${omz_comp_dst}
 # }}}
 
-# {{{ rustup (optional)
+# {{{ rust (optional)
+# {{{ rustup
 .PHONY: install-rustup
 install-rustup: tmpfile=/tmp/rustup-installer.sh
 install-rustup:
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o ${tmpfile}
 	sh ${tmpfile} -y -q --no-modify-path
 	rm ${tmpfile}
+# }}}
+
+# {{{ rust-analyzer
+rust_analyzer_url:=https://github.com/rust-analyzer/rust-analyzer/releases/download/${rust_analyzer_version}/rust-analyzer-x86_64-unknown-linux-gnu.gz
+rust_analyzer_cache_file:=${cachedir}/rust-analyzer.gz
+rust_analyzer_dst:=${HOME}/.local/bin/rust-analyzer
+
+.SECONDARY: ${rust_analyzer_cache_file}
+${rust_analyzer_cache_file}:
+	curl -L ${rust_analyzer_url} -o $@
+
+${rust_analyzer_dst}: dstdir=$(shell dirname ${rust_analyzer_dst})
+${rust_analyzer_dst}: ${rust_analyzer_cache_file}
+	mkdir -p ${dstdir}
+	gzip -c -d $< > $@
+	chmod 740 $@
+# }}}
+
+.PHONY: install-rust
+install-rust: install-rustup ${rust_analyzer_dst}
 # }}}
 
 # {{{ Testing targets

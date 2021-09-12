@@ -48,3 +48,5 @@ g['airline#extensions#tabline#enabled'] = 1
 -- filetype plugin on
 -- filetype plugin indent on
 
+-- Language Servers
+require'lspconfig'.rust_analyzer.setup{}
