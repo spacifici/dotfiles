@@ -17,4 +17,7 @@ return require('packer').startup(function()
     -- vim-airline
     use 'vim-airline/vim-airline'
     use 'vim-airline/vim-airline-themes'
+
+    -- vim-devicons
+    use 'ryanoasis/vim-devicons'
 end)
