@@ -5,6 +5,20 @@ return require('packer').startup(function()
     -- nvim-lspconfig
     use 'neovim/nvim-lspconfig'
 
+    -- nvim-cmp (completion)
+    use {
+        'hrsh7th/nvim-cmp',
+        requires = {
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/vim-vsnip',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-path',
+        }
+    }
+
+    -- rust-tools
+    use 'simrat39/rust-tools.nvim'
+
     -- fzf-vim
     use 'junegunn/fzf'
 
