@@ -46,6 +46,11 @@ u.colorscheme('seoul256')
 g.airline_powerline_fonts = 1
 g['airline#extensions#tabline#enabled'] = 1
 
+u.augroup('filetype_tab_expansion', { 
+    'FileType make,sh setlocal noexpandtab',
+    'FileType javascript,json setlocal tabstop=2|setlocal shiftwidth=2',
+})
+
 -- Language Servers
 local lsp=require'lspconfig'
 lsp.rust_analyzer.setup{}
