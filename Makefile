@@ -1,4 +1,4 @@
-executables:=curl gunzip tar sha1sum git
+executables:=curl gunzip tar sha1sum git zip unzip
 fzf_version:=0.27.2
 neovim_version:=v0.5.0
 rg_version:=13.0.0
@@ -185,6 +185,12 @@ ${rust_analyzer_dst}: ${rust_analyzer_cache_file}
 
 .PHONY: install-rust
 install-rust: install-rustup ${rust_analyzer_dst}
+# }}}
+
+# {{{ sdkman (optional)
+.PHONY: install-sdkman
+install-sdkman:
+	curl -s "https://get.sdkman.io?rcupdate=false" | bash
 # }}}
 
 # {{{ Testing targets

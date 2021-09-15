@@ -7,6 +7,8 @@ RUN apt-get update && \
         locales \
         make \
         tmux \
+        unzip \
+        zip \
         zsh && \
     locale-gen en_US.UTF-8 && \
     mkdir -p /root/.ssh && \
