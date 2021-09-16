@@ -24,14 +24,14 @@ exc:=$(foreach exec,$(executables),\
 .PHONY: help # prints this help message
 help:
 	@echo "Run \033[1mmake <target>\033[0m where target is one of the following:"
-	@sed -n -E -e 's/^\.PHONY:\s+([^\ ]+)\s+#\s+(.*)/\1 \2/p' Makefile|\
+	@sed -n -E -e 's/^\.PHONY:\s+([^\ ]+)\s+#\s+(.*)/\1 \2/p' $(lastword $(MAKEFILE_LIST))|\
 		awk '{ printf("\033[32m\033[1m%-18s\033[0m", $$1);$$1="";printf("%s\n", $$0) }'
 
 # {{{ install target
-.PHONY: install # installs the dotfiles, nvim, fzf, ripgrep and oh-my-zsh
+.PHONY: install # installs the dotfiles, neovim, fzf, ripgrep and Oh My Zsh
 install: install-nvim install-fzf install-ripgrep install-oh-my-zsh install-dotfiles
 
-.PHONY: install-optional # installs optional packages (rustup, sdkman, java, nvm and node)
+.PHONY: install-optional # installs optional packages (rustup, SDKMAN, Java, NVM and Node.js)
 install-optionals: install install-rust install-sdkman install-java install-nvm install-nodejs
 
 .PHONY: install-all # installs everything
@@ -145,7 +145,7 @@ ${packer_nvim_path}: ${packer_nvim_cache}
 install-nvim: ${nvim_install_dir} ${packer_nvim_path}
 # }}}
 
-# {{{ oh-my-zsh
+# {{{ Oh My Zsh
 omz_dst:=${HOME}/.oh-my-zsh
 omz_repo_url:=https://github.com/ohmyzsh/ohmyzsh.git
 omz_cache_dir:=${cachedir}/oh-my-zsh
@@ -168,7 +168,7 @@ ${omz_comp_dst}: ${omz_dst} ${omz_comp_cache_dir}
 	cp -a ${omz_comp_cache_dir} ${omz_comp_dst}
 # }}}
 
-.PHONY: install-oh-my-zsh # installs oh-my-zsh and the extra completion plugin
+.PHONY: install-oh-my-zsh # installs Oh My Zsh and the extra completion plugin
 install-oh-my-zsh: ${omz_dst} ${omz_comp_dst}
 # }}}
 
@@ -202,19 +202,19 @@ ${rust_analyzer_dst}: ${rust_analyzer_cache_file}
 install-rust: install-rustup ${rust_analyzer_dst}
 # }}}
 
-# {{{ sdkman (optional)
-.PHONY: install-sdkman # installs sdkman
+# {{{ SDKMAN (optional)
+.PHONY: install-sdkman # installs SDKMAN
 install-sdkman:
 	curl -s "https://get.sdkman.io?rcupdate=false" | bash
 # }}}
 
-# {{{ Java (optional, require sdkman)
-.PHONY: install-java # installs Java (JDK, using sdkman)
+# {{{ Java (optional, require SDKMAN)
+.PHONY: install-java # installs Java (JDK, using SDKMAN)
 install-java: install-sdkman
 	env SDKMAN_DIR=${HOME}/.sdkman bash -c 'source $${SDKMAN_DIR}/bin/sdkman-init.sh && sdk install java'
 # }}}
 
-# {{{ nvm (optional)
+# {{{ NVM (optional)
 nvm_dst:=${HOME}/.nvm
 nvm_repo_url:=https://github.com/nvm-sh/nvm.git
 nvm_cache_dir:=${cachedir}/nvm
@@ -226,12 +226,12 @@ ${nvm_cache_dir}:
 ${nvm_dst}: ${nvm_cache_dir}
 	cp -a $< $@
 
-.PHONY: install-nvm # installs nvm
+.PHONY: install-nvm # installs NVM
 install-nvm: ${nvm_dst}
 # }}}
 
-# {{{ Nodejs (optional, require nvm)
-.PHONY: install-nodejs # installs Nodejs (using nvm)
+# {{{ Node.js (optional, require NVM)
+.PHONY: install-nodejs # installs Node.js (using NVM)
 install-nodejs: install-nvm
 	env NVM_DIR=${HOME}/.nvm bash -c 'source $${NVM_DIR}/nvm.sh; nvm install --lts'
 # }}}
