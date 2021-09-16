@@ -3,6 +3,7 @@ fzf_version:=0.27.2
 neovim_version:=v0.5.0
 rg_version:=13.0.0
 rust_analyzer_version:=2021-09-06
+nvm_version:=v0.38.0
 
 makedir:=$(shell cd $(shell dirname $(MAKEFILE_LIST));pwd)
 scriptsdir:=$(makedir)/scripts
@@ -21,6 +22,12 @@ install_dotfiles_sh=$(scriptsdir)/install_dotfiles.sh
 install: exc:=$(foreach exec,$(executables),\
 	$(if $(shell which $(exec)),no error,$(error "No $(exec) installed")))
 install: install-nvim install-fzf install-ripgrep install-oh-my-zsh install-dotfiles
+
+.PHONY: install-optional
+install-optionals: install install-rust install-sdkman install-nvm
+
+.PHONY: install-all
+install-all: install-optionals
 
 $(optdir):
 	mkdir -p ${optdir}
@@ -191,6 +198,22 @@ install-rust: install-rustup ${rust_analyzer_dst}
 .PHONY: install-sdkman
 install-sdkman:
 	curl -s "https://get.sdkman.io?rcupdate=false" | bash
+# }}}
+
+# {{{ nvm (optional)
+nvm_dst:=${HOME}/.nvm
+nvm_repo_url:=https://github.com/nvm-sh/nvm.git
+nvm_cache_dir:=${cachedir}/nvm
+
+${nvm_cache_dir}:
+	git clone ${nvm_repo_url} $@
+	cd $@ && git checkout ${nvm_version}
+
+${nvm_dst}: ${nvm_cache_dir}
+	cp -a $< $@
+
+.PHONY: install-nvm
+install-nvm: ${nvm_dst}
 # }}}
 
 # {{{ Testing targets

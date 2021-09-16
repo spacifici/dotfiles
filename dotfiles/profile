@@ -31,5 +31,9 @@ if [ -d "$HOME/.cargo/bin" ] ; then
     PATH="$HOME/.cargo/bin:$PATH"
 fi
 
+if [ -d "$HOME/.nvm" ] ; then 
+    NVM_DIR="$HOME/.nvm"
+fi
+
 PATH="$HOME/opt/nvim-linux64/bin:$PATH"
 EDITOR="nvim"
