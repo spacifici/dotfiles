@@ -24,7 +24,7 @@ install: exc:=$(foreach exec,$(executables),\
 install: install-nvim install-fzf install-ripgrep install-oh-my-zsh install-dotfiles
 
 .PHONY: install-optional
-install-optionals: install install-rust install-sdkman install-nvm
+install-optionals: install install-rust install-sdkman install-java install-nvm install-nodejs
 
 .PHONY: install-all
 install-all: install-optionals
@@ -200,6 +200,11 @@ install-sdkman:
 	curl -s "https://get.sdkman.io?rcupdate=false" | bash
 # }}}
 
+# {{{ Java (optional, require sdkman)
+.PHONY: install-java
+install-java: install-sdkman
+	env SDKMAN_DIR=${HOME}/.sdkman bash -c 'source $${SDKMAN_DIR}/bin/sdkman-init.sh && sdk install java'
+# }}}
 # {{{ nvm (optional)
 nvm_dst:=${HOME}/.nvm
 nvm_repo_url:=https://github.com/nvm-sh/nvm.git
@@ -216,6 +221,12 @@ ${nvm_dst}: ${nvm_cache_dir}
 install-nvm: ${nvm_dst}
 # }}}
 
+# {{{ Nodejs (optional, require nvm)
+.PHONY: install-nodejs
+install-nodejs: install-nvm
+	env NVM_DIR=${HOME}/.nvm bash -c 'source $${NVM_DIR}/nvm.sh; nvm install --lts'
+# }}}
+
 # {{{ Testing targets
 .PHONY: test
 test:
@@ -224,7 +235,6 @@ test:
 .PHONY: try-it
 try-it:
 	@${test_sh} -i
-
 # }}}
 
 .PHONY: debug

@@ -55,6 +55,12 @@ plugins=(colored-man-pages docker git ripgrep ssh-agent zsh-completions)
 if [[ -d "$HOME/.cargo" ]] {
     plugins+=(cargo)
 }
+if [[ -s "$HOME/.nvm/nvm.sh" ]] {
+    plugins+=(nvm)
+}
+if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] {
+    plugins+=(sdk)
+}
 autoload -U compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
@@ -108,5 +114,7 @@ if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then
     source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
-# NVM
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+if [[ -s "$HOME/.nvm/nvm.sh" ]]; then
+    export NVM_DIR="$HOME/.nvm"
+    source "${NVM_DIR}/nvm.sh"
+fi
