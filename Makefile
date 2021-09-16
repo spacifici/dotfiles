@@ -17,16 +17,24 @@ os:=$(shell uname -s | tr [:upper:] [:lower:])
 test_sh=$(scriptsdir)/test.sh
 install_dotfiles_sh=$(scriptsdir)/install_dotfiles.sh
 
-# {{{ install target
-.PHONY: install
-install: exc:=$(foreach exec,$(executables),\
+# Check deps
+exc:=$(foreach exec,$(executables),\
 	$(if $(shell which $(exec)),no error,$(error "No $(exec) installed")))
+
+.PHONY: help # prints this help message
+help:
+	@echo "Run \033[1mmake <target>\033[0m where target is one of the following:"
+	@sed -n -E -e 's/^\.PHONY:\s+([^\ ]+)\s+#\s+(.*)/\1 \2/p' Makefile|\
+		awk '{ printf("\033[32m\033[1m%-18s\033[0m", $$1);$$1="";printf("%s\n", $$0) }'
+
+# {{{ install target
+.PHONY: install # installs the dotfiles, nvim, fzf, ripgrep and oh-my-zsh
 install: install-nvim install-fzf install-ripgrep install-oh-my-zsh install-dotfiles
 
-.PHONY: install-optional
+.PHONY: install-optional # installs optional packages (rustup, sdkman, java, nvm and node)
 install-optionals: install install-rust install-sdkman install-java install-nvm install-nodejs
 
-.PHONY: install-all
+.PHONY: install-all # installs everything
 install-all: install-optionals
 
 $(optdir):
@@ -34,7 +42,7 @@ $(optdir):
 # }}}
 
 # {{{ Dotfiles
-.PHONY: install-dotfiles
+.PHONY: install-dotfiles # installs recursively all the files in the dotfiles dir
 install-dotfiles:
 	@${install_dotfiles_sh}
 # }}}
@@ -73,7 +81,7 @@ ${fzf_shell_dstdir}/%: ${fzf_shell_cache_prefix}%
 	mkdir -p ${fzf_shell_dstdir}
 	cp $< $@
 
-.PHONY: install-fzf
+.PHONY: install-fzf # installs fzf in ${HOME}/.local/bin
 install-fzf: ${fzf_bin_dst} ${fzf_shell_dsts}
 
 # }}}
@@ -98,7 +106,7 @@ ${rg_man_dst}: ${rg_cache_file}
 	mkdir -p ${dstdir}
 	tar xf $< -C ${dstdir} --strip-components=2 --wildcards '*/rg.1'
 
-.PHONY: install-ripgrep
+.PHONY: install-ripgrep # installs ripgrep (rg) in ${HOME}/.local/bin (and its manpage)
 install-ripgrep: ${rg_bin_dst} ${rg_man_dst}
 
 # }}}
@@ -133,7 +141,7 @@ ${packer_nvim_path}: ${packer_nvim_cache}
 	cp -a $< $@
 # }}}
 
-.PHONY: install-nvim
+.PHONY: install-nvim # installs neovim in ${HOME}/opt
 install-nvim: ${nvim_install_dir} ${packer_nvim_path}
 # }}}
 
@@ -160,7 +168,7 @@ ${omz_comp_dst}: ${omz_dst} ${omz_comp_cache_dir}
 	cp -a ${omz_comp_cache_dir} ${omz_comp_dst}
 # }}}
 
-.PHONY: install-oh-my-zsh
+.PHONY: install-oh-my-zsh # installs oh-my-zsh and the extra completion plugin
 install-oh-my-zsh: ${omz_dst} ${omz_comp_dst}
 # }}}
 
@@ -190,21 +198,22 @@ ${rust_analyzer_dst}: ${rust_analyzer_cache_file}
 	chmod 740 $@
 # }}}
 
-.PHONY: install-rust
+.PHONY: install-rust # installs rust (via rustup)
 install-rust: install-rustup ${rust_analyzer_dst}
 # }}}
 
 # {{{ sdkman (optional)
-.PHONY: install-sdkman
+.PHONY: install-sdkman # installs sdkman
 install-sdkman:
 	curl -s "https://get.sdkman.io?rcupdate=false" | bash
 # }}}
 
 # {{{ Java (optional, require sdkman)
-.PHONY: install-java
+.PHONY: install-java # installs Java (JDK, using sdkman)
 install-java: install-sdkman
 	env SDKMAN_DIR=${HOME}/.sdkman bash -c 'source $${SDKMAN_DIR}/bin/sdkman-init.sh && sdk install java'
 # }}}
+
 # {{{ nvm (optional)
 nvm_dst:=${HOME}/.nvm
 nvm_repo_url:=https://github.com/nvm-sh/nvm.git
@@ -217,12 +226,12 @@ ${nvm_cache_dir}:
 ${nvm_dst}: ${nvm_cache_dir}
 	cp -a $< $@
 
-.PHONY: install-nvm
+.PHONY: install-nvm # installs nvm
 install-nvm: ${nvm_dst}
 # }}}
 
 # {{{ Nodejs (optional, require nvm)
-.PHONY: install-nodejs
+.PHONY: install-nodejs # installs Nodejs (using nvm)
 install-nodejs: install-nvm
 	env NVM_DIR=${HOME}/.nvm bash -c 'source $${NVM_DIR}/nvm.sh; nvm install --lts'
 # }}}
@@ -232,7 +241,7 @@ install-nodejs: install-nvm
 test:
 	@${test_sh}
 
-.PHONY: try-it
+.PHONY: try-it # creates a docker container, runs `make install` and then runs an interactive shell in the container
 try-it:
 	@${test_sh} -i
 # }}}
