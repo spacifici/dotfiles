@@ -39,6 +39,9 @@ u.map('n', '<C-j>', '<C-w>j', { noremap = true })
 u.map('n', '<C-k>', '<C-w>k', { noremap = true })
 u.map('n', '<C-l>', '<C-w>l', { noremap = true })
 
+-- NERDTree toggling
+u.map('n', '<Leader>t', ':NERDTreeToggle<CR>', { noremap = true })
+
 g.solarized_termcolors=256
 u.colorscheme('seoul256')
 

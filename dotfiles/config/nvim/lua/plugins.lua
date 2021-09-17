@@ -34,4 +34,18 @@ return require('packer').startup(function()
 
     -- vim-devicons
     use 'ryanoasis/vim-devicons'
+
+    -- NERDTree & plugins
+    use {
+        'preservim/nerdtree',
+        requires = {
+            'Xuyuanp/nerdtree-git-plugin',
+            'ryanoasis/vim-devicons',
+            'tiagofumo/vim-nerdtree-syntax-highlight',
+            'PhilRunninger/nerdtree-visual-selection'
+        }
+    }
+
+    -- vim-markdown-preview
+    use 'JamshedVesuna/vim-markdown-preview'
 end)
