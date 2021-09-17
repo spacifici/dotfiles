@@ -139,10 +139,17 @@ ${packer_nvim_path}: dstdir=$(shell dirname ${packer_nvim_path})
 ${packer_nvim_path}: ${packer_nvim_cache}
 	mkdir -p ${dstdir}
 	cp -a $< $@
+
+.PHONY: nvim-bootstrap-packer
+nvim-bootstrap-packer:
+	${nvim_install_dir}/bin/nvim -u NONE --headless \
+		-c 'autocmd User PackerComplete quitall' \
+		-c 'source ${makedir}/dotfiles/config/nvim/lua/plugins.lua' \
+		-c 'PackerSync'
 # }}}
 
 .PHONY: install-nvim # installs neovim in ${HOME}/opt
-install-nvim: ${nvim_install_dir} ${packer_nvim_path}
+install-nvim: ${nvim_install_dir} ${packer_nvim_path} nvim-bootstrap-packer
 # }}}
 
 # {{{ Oh My Zsh
