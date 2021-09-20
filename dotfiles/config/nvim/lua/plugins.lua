@@ -46,6 +46,9 @@ return require('packer').startup(function()
         }
     }
 
-    -- vim-markdown-preview
-    use 'JamshedVesuna/vim-markdown-preview'
+    -- markdown-preview
+    use {
+        'iamcco/markdown-preview.nvim',
+        run = function() vim.fn['mkdp#util#install']() end
+    }
 end)
