@@ -23,7 +23,7 @@ w.number=true
 w.colorcolumn="80"
 
 -- FZF shortcut
-u.map('n', '<Leader>f', ':FZF<cr>')
+u.map('n', '<Leader>f', ':FZF<cr>', { silent = true })
 
 -- Easier split navigations
 u.map('t', '<C-h>', '<C-\\><C-N><C-w>h', { noremap = true })
@@ -40,7 +40,7 @@ u.map('n', '<C-k>', '<C-w>k', { noremap = true })
 u.map('n', '<C-l>', '<C-w>l', { noremap = true })
 
 -- NERDTree toggling
-u.map('n', '<Leader>t', ':NERDTreeToggle<CR>', { noremap = true })
+u.map('n', '<Leader>t', ':NERDTreeToggle<CR>', { noremap = true, silent = true})
 
 g.solarized_termcolors=256
 u.colorscheme('seoul256')
