@@ -43,7 +43,7 @@ exc:=$(foreach exec,$(executables),\
 # {{{ help targets
 .PHONY: help # prints this help message
 help:
-	@echo "Run ${help_format_code_start}make <target>${help_format_code_end} where target is one of the following:"
+	@echo "Run ${help_format_code_start}make <target>${help_format_code_end} where target is one of the following:\n"
 	@sed -n -E -e 's/^\.PHONY:\s+([^\ ]+)\s+#\s+(.*)/\1 \2/p' $(lastword $(MAKEFILE_LIST))|\
 		awk '{ printf("${help_format_target_start}${help_format_target_end}", $$1);$$1="";printf("%s\n", $$0) }'
 
