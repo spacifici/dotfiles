@@ -1,54 +1,42 @@
 return require('packer').startup(function()
-    -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
+    use 'wbthomason/packer.nvim' -- Plugins management
 
-    -- nvim-lspconfig
-    use 'neovim/nvim-lspconfig'
+    use 'neovim/nvim-lspconfig' -- Neovim LSP configuration
 
-    -- nvim-cmp (completion)
     use {
-        'hrsh7th/nvim-cmp',
+        'hrsh7th/nvim-cmp', -- Completion support
         requires = {
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/vim-vsnip',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-nvim-lsp', -- Completion from LSP
+            'hrsh7th/vim-vsnip', -- VSCode snippets completion
+            'hrsh7th/cmp-buffer', -- Completion from buffer content
+            'hrsh7th/cmp-path', -- File path completion
         }
     }
 
-    -- rust-tools
-    use 'simrat39/rust-tools.nvim'
+    use 'simrat39/rust-tools.nvim' -- It makes Rust development easier
 
-    -- fzf-vim
-    use 'junegunn/fzf'
+    use 'junegunn/fzf' -- FZF integration
 
-    -- vim-tmux-navigator
-    use 'christoomey/vim-tmux-navigator'
+    use 'christoomey/vim-tmux-navigator' -- Easier navigation between Neovim windows and TMUX panels
 
-    -- seoul256 color scheme
-    use 'junegunn/seoul256.vim'
+    use 'junegunn/seoul256.vim' -- My favorite color scheme
 
-    -- vim-airline
-    use 'vim-airline/vim-airline'
-    use 'vim-airline/vim-airline-themes'
+    use 'vim-airline/vim-airline' -- Fancy status and tab line
+    use 'vim-airline/vim-airline-themes' -- Themes for vim-airline
 
-    -- vim-devicons
-    use 'ryanoasis/vim-devicons'
+    use 'ryanoasis/vim-devicons' -- Icons everywhere
 
-    -- NERDTree & plugins
     use {
-        'preservim/nerdtree',
+        'preservim/nerdtree', -- NERDTree file system explorer
         requires = {
-            'Xuyuanp/nerdtree-git-plugin',
-            'ryanoasis/vim-devicons',
-            'tiagofumo/vim-nerdtree-syntax-highlight',
-            'PhilRunninger/nerdtree-visual-selection'
+            'Xuyuanp/nerdtree-git-plugin', -- Shows git status in NERDTree
+            'tiagofumo/vim-nerdtree-syntax-highlight', -- Syntax highlighting for NERDTree
+            'PhilRunninger/nerdtree-visual-selection' -- Action on selected files
         }
     }
 
-    -- markdown-preview
     use {
-        'iamcco/markdown-preview.nvim',
+        'iamcco/markdown-preview.nvim', -- Markdown preview in the Browser
         run = function() vim.fn['mkdp#util#install']() end
     }
 end)

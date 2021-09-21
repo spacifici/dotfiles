@@ -13,6 +13,25 @@ optdir=${HOME}/opt
 arch:=$(shell uname -m)
 os:=$(shell uname -s | tr [:upper:] [:lower:])
 
+# {{{ help targer formatting
+help_format=terminal
+help_format_code_start=\033[1m
+help_format_code_end=\033[0m
+help_format_target_start=\033[32m\033[1m%-18s
+help_format_target_end=\033[0m
+
+help_format_neovim_plugin=\033[32m\033[1m%-40s\033[0m
+
+ifeq ($(help_format),markdown)
+	help_format_code_start=\`
+	help_format_code_end=\`
+	help_format_target_start=* **%s
+	help_format_target_end=**
+
+	help_format_neovim_plugin=* **[%s](https://github.com/%s)**
+endif
+# }}}
+
 # Helpers scripts
 test_sh=$(scriptsdir)/test.sh
 install_dotfiles_sh=$(scriptsdir)/install_dotfiles.sh
@@ -21,11 +40,18 @@ install_dotfiles_sh=$(scriptsdir)/install_dotfiles.sh
 exc:=$(foreach exec,$(executables),\
 	$(if $(shell which $(exec)),no error,$(error "No $(exec) installed")))
 
+# {{{ help targets
 .PHONY: help # prints this help message
 help:
-	@echo "Run \033[1mmake <target>\033[0m where target is one of the following:"
+	@echo "Run ${help_format_code_start}make <target>${help_format_code_end} where target is one of the following:"
 	@sed -n -E -e 's/^\.PHONY:\s+([^\ ]+)\s+#\s+(.*)/\1 \2/p' $(lastword $(MAKEFILE_LIST))|\
-		awk '{ printf("\033[32m\033[1m%-18s\033[0m", $$1);$$1="";printf("%s\n", $$0) }'
+		awk '{ printf("${help_format_target_start}${help_format_target_end}", $$1);$$1="";printf("%s\n", $$0) }'
+
+.PHONY: help_nvim_plugins # List all the installed Neovim plugins
+help_nvim_plugins:
+	@sed -nEe "s/^\s+(use)?\s+'([^']+)',?\s+--\s(.*)/\2 \3/p" ${makedir}/dotfiles/config/nvim/lua/plugins.lua|\
+		awk '{ url=sprintf("${help_format_neovim_plugin}", $$1, $$1);$$1="";printf("%s %s\n", url, $$0) }'
+# }}}
 
 # {{{ install target
 .PHONY: install # installs the dotfiles, neovim, fzf, ripgrep and Oh My Zsh
@@ -83,7 +109,6 @@ ${fzf_shell_dstdir}/%: ${fzf_shell_cache_prefix}%
 
 .PHONY: install-fzf # installs fzf in ${HOME}/.local/bin
 install-fzf: ${fzf_bin_dst} ${fzf_shell_dsts}
-
 # }}}
 
 # {{{ ripgrep
@@ -108,7 +133,6 @@ ${rg_man_dst}: ${rg_cache_file}
 
 .PHONY: install-ripgrep # installs ripgrep (rg) in ${HOME}/.local/bin (and its manpage)
 install-ripgrep: ${rg_bin_dst} ${rg_man_dst}
-
 # }}}
 
 # {{{ Neovim
@@ -251,6 +275,12 @@ test:
 .PHONY: try-it # creates a docker container, runs `make install` and then runs an interactive shell in the container
 try-it:
 	@${test_sh} -i
+# }}}
+
+# {{{ README.md generation
+.PHONY: README.md
+README.md:
+	@scripts/gen_readme.sh > $@
 # }}}
 
 .PHONY: debug
