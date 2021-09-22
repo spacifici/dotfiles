@@ -32,5 +32,15 @@ runs just the \`install\` target, it skip all the dev tools.
 
 ## Neovim plugins
 
-$(cd $ROOTDIR; make -s help_nvim_plugins help_format=markdown)
+$(
+	cd $ROOTDIR
+	sed -nEe \
+		"s/^\s+(use)?\s+'([^']+)',?\s+--\s(.*)/\2 \3/p" \
+		dotfiles/config/nvim/lua/plugins.lua \
+	|awk '{
+		url=sprintf("* **[%s](https://github.com/%s)**", $1, $1);
+		$1="";
+		printf("%s %s\n", url, $0)
+	}'
+)
 EOF

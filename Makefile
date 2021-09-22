@@ -20,15 +20,11 @@ help_format_code_end=\033[0m
 help_format_target_start=\033[32m\033[1m%-18s
 help_format_target_end=\033[0m
 
-help_format_neovim_plugin=\033[32m\033[1m%-40s\033[0m
-
 ifeq ($(help_format),markdown)
 	help_format_code_start=\`
 	help_format_code_end=\`
 	help_format_target_start=* **%s
 	help_format_target_end=**
-
-	help_format_neovim_plugin=* **[%s](https://github.com/%s)**
 endif
 # }}}
 
@@ -46,11 +42,6 @@ help:
 	@echo "Run ${help_format_code_start}make <target>${help_format_code_end} where target is one of the following:\n"
 	@sed -n -E -e 's/^\.PHONY:\s+([^\ ]+)\s+#\s+(.*)/\1 \2/p' $(lastword $(MAKEFILE_LIST))|\
 		awk '{ printf("${help_format_target_start}${help_format_target_end}", $$1);$$1="";printf("%s\n", $$0) }'
-
-.PHONY: help_nvim_plugins # List all the installed Neovim plugins
-help_nvim_plugins:
-	@sed -nEe "s/^\s+(use)?\s+'([^']+)',?\s+--\s(.*)/\2 \3/p" ${makedir}/dotfiles/config/nvim/lua/plugins.lua|\
-		awk '{ url=sprintf("${help_format_neovim_plugin}", $$1, $$1);$$1="";printf("%s %s\n", url, $$0) }'
 # }}}
 
 # {{{ install target
