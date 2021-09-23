@@ -6,7 +6,7 @@ A collection of dotfiles, utils, dev tools and editor I generally like to have
 installed on every machine I work on, both local (my laptop) and remote (heavy
 duty build server).
 
-## Tools
+## Software
 
 $(
 section=0

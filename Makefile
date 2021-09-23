@@ -113,7 +113,7 @@ install-fzf: ${fzf_bin_dst} ${fzf_shell_dsts}
 # * https://github.com/BurntSushi/ripgrep
 # * line-oriented search tool that recursively searches the current directory
 # * for a regex pattern. It respects gitignore rules and skips hidden files and
-# * directories.
+# * directories
 # */
 rg_bin_dst:=${HOME}/.local/bin/rg
 rg_man_dst:=${HOME}/.local/share/man/man1/rg.1
@@ -142,7 +142,7 @@ install-ripgrep: ${rg_bin_dst} ${rg_man_dst}
 #/*
 # * Neovim
 # * https://neovim.io
-# * a Vim-based text editor engineered for extensibility and usability.
+# * a Vim-based text editor engineered for extensibility and usability
 # */
 nvim_os_arch:=$(strip $(if $(subst linux,,${os}),$(error "Os not supported: ${os}"),\
 $(if $(subst x86_64,,${arch}),$(error "Arch not supported: ${arch}"),linux64)))
@@ -185,6 +185,12 @@ install-nvim: ${nvim_install_dir} ${packer_nvim_path} nvim-bootstrap-packer
 # }}}
 
 # {{{ OhMyZsh
+#/*
+# * OhMyZsh
+# * https://ohmyz.sh
+# * a delightful, open source, community-driven framework for managing your zsh
+# * configuration
+# */
 omz_dst:=${HOME}/.oh-my-zsh
 omz_repo_url:=https://github.com/ohmyzsh/ohmyzsh.git
 omz_cache_dir:=${cachedir}/oh-my-zsh
@@ -213,6 +219,13 @@ install-oh-my-zsh: ${omz_dst} ${omz_comp_dst}
 
 # {{{ rust (optional)
 # {{{ rustup
+#/*
+# * rustup
+# * https://rustup.rs
+# * installs The Rust Programming Language from the official release channels,
+# * enabling you to easily switch between stable, beta, and nightly compilers
+# * and keep them updated
+# */
 .PHONY: install-rustup
 install-rustup: tmpfile=/tmp/rustup-installer.sh
 install-rustup:
@@ -222,6 +235,13 @@ install-rustup:
 # }}}
 
 # {{{ rust-analyzer
+#/*
+# * rust-analyzer
+# * https://rust-analyzer.github.io
+# * an implementation of Language Server Protocol for the Rust programming
+# * language that provides features like completion and goto definition for
+# * many code editors
+# */
 rust_analyzer_url:=https://github.com/rust-analyzer/rust-analyzer/releases/download/${rust_analyzer_version}/rust-analyzer-x86_64-unknown-linux-gnu.gz
 rust_analyzer_cache_file:=${cachedir}/rust-analyzer.gz
 rust_analyzer_dst:=${HOME}/.local/bin/rust-analyzer
@@ -242,6 +262,12 @@ install-rust: install-rustup ${rust_analyzer_dst}
 # }}}
 
 # {{{ SDKMAN (optional)
+#/*
+# * SDKMAN
+# * https://sdkman.io
+# * a tool for managing parallel versions of multiple Software Development Kits
+# * on most Unix based systems
+# */
 .PHONY: install-sdkman # installs SDKMAN
 install-sdkman:
 	curl -s "https://get.sdkman.io?rcupdate=false" | bash
@@ -254,6 +280,12 @@ install-java: install-sdkman
 # }}}
 
 # {{{ NVM (optional)
+#/*
+# * Node Version Manager
+# * https://github.com/nvm-sh/nvm-sh
+# * a version manager for node.js, designed to be installed per-user, and
+# * invoked per-shell
+# */
 nvm_dst:=${HOME}/.nvm
 nvm_repo_url:=https://github.com/nvm-sh/nvm.git
 nvm_cache_dir:=${cachedir}/nvm

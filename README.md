@@ -1,29 +1,23 @@
-# dotfiles
-
 A collection of dotfiles, utils, dev tools and editor I generally like to have
 installed on every machine I work on, both local (my laptop) and remote (heavy
 duty build server).
 
-## Utils and dev tools
+## Software
 
-* **[FZF](https://github.com/junegunn/fzf)** command-line fuzzy finder
-* **[ripgrep](https://github.com/BurntSushi/ripgrep)** fast line-oriented
-  search tool
-* **[Neovim](https://neovim.io)** hyperextensible Vim-based text editor
-* **[OhMyZsh](https://github.com/ohmyzsh/ohmyzsh)** open source,
-  community-driven framework for managing zsh configuration
-* **[rustup](https://rustup.rs)** an installer for the systems programming
-  language Rust
-* **[sdkman](https://sdkman.io)** the Software Development Kit Manager
-* **[NVM](https://github.com/nvm-sh/nvm)** version manager for Node.js
-  JavaScript engine
+* **[FZF](https://github.com/junegunn/fzf)**  command-line fuzzy search with bash and zsh integration
+* **[ripgrep](https://github.com/BurntSushi/ripgrep)**  line-oriented search tool that recursively searches the current directory for a regex pattern. It respects gitignore rules and skips hidden files and directories
+* **[Neovim](https://neovim.io)**  a Vim-based text editor engineered for extensibility and usability
+* **[OhMyZsh](https://ohmyz.sh)**  a delightful, open source, community-driven framework for managing your zsh configuration
+* **[rustup](https://rustup.rs)**  installs The Rust Programming Language from the official release channels, enabling you to easily switch between stable, beta, and nightly compilers and keep them updated
+* **[rust-analyzer](https://rust-analyzer.github.io)**  an implementation of Language Server Protocol for the Rust programming language that provides features like completion and goto definition for many code editors
+* **[SDKMAN](https://sdkman.io)**  a tool for managing parallel versions of multiple Software Development Kits on most Unix based systems
+* **[Node Version Manager](https://github.com/nvm-sh/nvm-sh)**  a version manager for node.js, designed to be installed per-user, and invoked per-shell
 
 ## Make targets
 
 Run `make <target>` where target is one of the following:
 
 * **help** prints this help message
-* **help_nvim_plugins** List all the installed Neovim plugins
 * **install** installs the dotfiles, neovim, fzf, ripgrep and Oh My Zsh
 * **install-optional** installs optional packages (rustup, SDKMAN, Java, NVM and Node.js)
 * **install-all** installs everything
@@ -38,10 +32,6 @@ Run `make <target>` where target is one of the following:
 * **install-nvm** installs NVM
 * **install-nodejs** installs Node.js (using NVM)
 * **try-it** creates a docker container, runs `make install` and then runs an interactive shell in the container
-
-Without a target `make` will just print the help message. I use `make
-install-all` normally to install everything. Please, notice the `try-it` target
-runs just the `install` target, it skip all the dev tools.
 
 ## Neovim plugins
 
