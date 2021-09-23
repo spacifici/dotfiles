@@ -65,6 +65,11 @@ install-dotfiles:
 # }}}
 
 # {{{ FZF
+#/*
+# * FZF
+# * https://github.com/junegunn/fzf
+# * command-line fuzzy search with bash and zsh integration
+# */
 
 # FZF binary files
 fzf_arch:=$(if $(subst x86_64,,${arch}),$(error "Unknown arch: ${arch}"),amd64)
@@ -103,6 +108,13 @@ install-fzf: ${fzf_bin_dst} ${fzf_shell_dsts}
 # }}}
 
 # {{{ ripgrep
+#/*
+# * ripgrep
+# * https://github.com/BurntSushi/ripgrep
+# * line-oriented search tool that recursively searches the current directory
+# * for a regex pattern. It respects gitignore rules and skips hidden files and
+# * directories.
+# */
 rg_bin_dst:=${HOME}/.local/bin/rg
 rg_man_dst:=${HOME}/.local/share/man/man1/rg.1
 rg_release_url:=https://github.com/BurntSushi/ripgrep/releases/download/${rg_version}/ripgrep-${rg_version}-x86_64-unknown-linux-musl.tar.gz
@@ -127,6 +139,11 @@ install-ripgrep: ${rg_bin_dst} ${rg_man_dst}
 # }}}
 
 # {{{ Neovim
+#/*
+# * Neovim
+# * https://neovim.io
+# * a Vim-based text editor engineered for extensibility and usability.
+# */
 nvim_os_arch:=$(strip $(if $(subst linux,,${os}),$(error "Os not supported: ${os}"),\
 $(if $(subst x86_64,,${arch}),$(error "Arch not supported: ${arch}"),linux64)))
 nvim_release_url:=https://github.com/neovim/neovim/releases/download/${neovim_version}/nvim-${nvim_os_arch}.tar.gz
@@ -167,7 +184,7 @@ nvim-bootstrap-packer:
 install-nvim: ${nvim_install_dir} ${packer_nvim_path} nvim-bootstrap-packer
 # }}}
 
-# {{{ Oh My Zsh
+# {{{ OhMyZsh
 omz_dst:=${HOME}/.oh-my-zsh
 omz_repo_url:=https://github.com/ohmyzsh/ohmyzsh.git
 omz_cache_dir:=${cachedir}/oh-my-zsh
