@@ -10,7 +10,7 @@
 [difftool]
 	prompt = false
 [core]
-	editor = vim
+	editor = ${HOME}/opt/nvim-linux64/bin/nvim
 [push]
 	default = simple
 [merge]
@@ -25,6 +25,6 @@
 	process = git-lfs filter-process
 	required = true
 [difftool "vimdiff3"]
-	path = nvim
+	path = ${HOME}/opt/nvim-linux64/bin/nvim
 [mergetool "vimdiff3"]
-	path = nvim
+	path = ${HOME}/opt/nvim-linux64/bin/nvim
