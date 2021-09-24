@@ -1,8 +1,13 @@
+# dotfiles
+
 A collection of dotfiles, utils, dev tools and editor I generally like to have
 installed on every machine I work on, both local (my laptop) and remote (heavy
 duty build server).
 
 ## Software
+
+Through the `Makefile` targets, the following software can be installed. See
+[Make targets](#make-targets) to check which target install which software.
 
 * **[FZF](https://github.com/junegunn/fzf)**  command-line fuzzy search with bash and zsh integration
 * **[ripgrep](https://github.com/BurntSushi/ripgrep)**  line-oriented search tool that recursively searches the current directory for a regex pattern. It respects gitignore rules and skips hidden files and directories
@@ -34,6 +39,10 @@ Run `make <target>` where target is one of the following:
 * **try-it** creates a docker container, runs `make install` and then runs an interactive shell in the container
 
 ## Neovim plugins
+
+Neovim configuration comes with the following plugins listed in
+[plugins.lua](dotfiles/config/nvim/lua/plugins.lua). They get installed with
+the `install-nvim` Makefile target.
 
 * **[wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)**  Plugins management
 * **[neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)**  Neovim LSP configuration

@@ -2,11 +2,16 @@
 declare -r ROOTDIR=$(cd "$(dirname $0)/../"; pwd)
 
 cat << EOF
+# dotfiles
+
 A collection of dotfiles, utils, dev tools and editor I generally like to have
 installed on every machine I work on, both local (my laptop) and remote (heavy
 duty build server).
 
 ## Software
+
+Trought the \`Makefile\` targets, the following softwares can be installed. See
+[Make targets](#make-targets) to check which target install which software.
 
 $(
 section=0
@@ -41,6 +46,10 @@ done
 $(cd $ROOTDIR; make -s help help_format=markdown)
 
 ## Neovim plugins
+
+Neovim configuration comes with the following plugins listed in
+[plugins.lua](dotfiles/config/nvim/lua/plugins.lua). They get installed with
+the \`install-nvim\` Makefile target.
 
 $(
 	cd $ROOTDIR
