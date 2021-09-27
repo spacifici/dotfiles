@@ -1,6 +1,6 @@
 executables:=curl gunzip tar sha1sum git zip unzip
 fzf_version:=0.27.2
-neovim_version:=v0.5.0
+neovim_version:=v0.5.1
 rg_version:=13.0.0
 rust_analyzer_version:=2021-09-06
 nvm_version:=v0.38.0
