@@ -39,4 +39,11 @@ return require('packer').startup(function()
         'iamcco/markdown-preview.nvim', -- Markdown preview in the Browser
         run = function() vim.fn['mkdp#util#install']() end
     }
+
+    use {
+        'nvim-treesitter/nvim-treesitter', -- Treesitter
+        branch = '0.5-compat',
+        run = function() vim.cmd('TSUpdate') end
+    }
+
 end)

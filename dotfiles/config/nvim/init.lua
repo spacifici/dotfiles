@@ -39,6 +39,9 @@ u.map('n', '<C-j>', '<C-w>j', { noremap = true })
 u.map('n', '<C-k>', '<C-w>k', { noremap = true })
 u.map('n', '<C-l>', '<C-w>l', { noremap = true })
 
+-- UI settings
+o.guifont='FiraCode Nerd Font:h10'
+
 -- NERDTree toggling
 u.map('n', '<Leader>t', ':NERDTreeToggle<CR>', { noremap = true, silent = true})
 
@@ -59,8 +62,7 @@ u.augroup('filetype_tab_expansion', {
 local lsp=require'lspconfig'
 lsp.rust_analyzer.setup{}
 
--- The following config is taken from https://sharksforarms.dev/posts/neovim-rust/
--- {{{
+-- {{{ The following config is taken from https://sharksforarms.dev/posts/neovim-rust/
 o.completeopt="menuone,noinsert,noselect"
 o.shortmess=o.shortmess..'c'
 
@@ -96,8 +98,9 @@ require('rust-tools').setup({
 })
 
 require('rust-tools').setup(opts)
+-- }}}
 
--- Completion setup
+-- {{{ Completion setup
 local cmp = require'cmp'
 cmp.setup({
     -- Enable LSP snippets
@@ -129,4 +132,13 @@ cmp.setup({
         { name = 'buffer' },
     },
 })
+-- }}}
+
+-- {{{ Treesitter
+require 'nvim-treesitter.configs'.setup {
+    ensure_installed = { 'rust', 'bash', 'python', 'javascript' },
+    highlight = {
+        enable = true
+    }
+}
 -- }}}
