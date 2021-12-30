@@ -53,7 +53,7 @@ g.airline_powerline_fonts = 1
 g['airline#extensions#tabline#enabled'] = 1
 
 u.augroup('filetype_tab_expansion', { 
-    'FileType make,sh setlocal noexpandtab|set foldmethod=marker',
+    'FileType make,sh,gitconfig setlocal noexpandtab|set foldmethod=marker',
     'FileType javascript,json setlocal tabstop=2|setlocal shiftwidth=2',
     'FileType markdown setlocal spell',
 })
@@ -61,6 +61,7 @@ u.augroup('filetype_tab_expansion', {
 -- Language Servers
 local lsp=require'lspconfig'
 lsp.rust_analyzer.setup{}
+lsp.pylsp.setup{}
 
 -- {{{ The following config is taken from https://sharksforarms.dev/posts/neovim-rust/
 o.completeopt="menuone,noinsert,noselect"

@@ -13,18 +13,19 @@
 	editor = ${HOME}/opt/nvim-linux64/bin/nvim
 [push]
 	default = simple
+[mergetool "vimdiff3"]
+    cmd = nvim -d -c \"wincmd J\" -c \"windo set wrap\" $MERGED $LOCAL $BASE $REMOTE
 [merge]
 	tool = vimdiff3
 	conflictstyle = diff3
 	renamelimit = 20000
 [mergetool]
 	prompt = false
+	keepBackup = false
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 [difftool "vimdiff3"]
-	path = ${HOME}/opt/nvim-linux64/bin/nvim
-[mergetool "vimdiff3"]
-	path = ${HOME}/opt/nvim-linux64/bin/nvim
+	path = nvim -d
