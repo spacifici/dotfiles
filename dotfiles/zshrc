@@ -53,7 +53,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(colored-man-pages docker git ripgrep ssh-agent zsh-completions)
 if [[ -d "$HOME/.cargo" ]] {
-    plugins+=(cargo)
+    plugins+=(rust)
 }
 if [[ -s "$HOME/.nvm/nvm.sh" ]] {
     plugins+=(nvm)
