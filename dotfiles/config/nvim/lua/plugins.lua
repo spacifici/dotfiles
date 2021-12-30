@@ -42,7 +42,7 @@ return require('packer').startup(function()
 
     use {
         'nvim-treesitter/nvim-treesitter', -- Treesitter
-        branch = '0.5-compat',
+        branch = 'master',
         run = function() vim.cmd('TSUpdate') end
     }
 
