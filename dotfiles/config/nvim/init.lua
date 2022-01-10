@@ -54,7 +54,7 @@ g['airline#extensions#tabline#enabled'] = 1
 
 u.augroup('filetype_tab_expansion', { 
     'FileType make,sh,gitconfig setlocal noexpandtab|set foldmethod=marker',
-    'FileType javascript,json setlocal tabstop=2|setlocal shiftwidth=2',
+    'FileType javascript,json,yaml setlocal tabstop=2|setlocal shiftwidth=2',
     'FileType markdown setlocal spell',
 })
 
