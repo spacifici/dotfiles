@@ -1,6 +1,6 @@
 executables:=curl gunzip tar sha1sum git zip unzip
 fzf_version:=0.29.0
-neovim_version:=v0.6.0
+neovim_version:=v0.6.1
 rg_version:=13.0.0
 rust_analyzer_version:=2021-12-27
 nvm_version:=v0.39.1
@@ -182,6 +182,17 @@ nvim-bootstrap-packer:
 
 .PHONY: install-nvim # installs neovim in ${HOME}/opt
 install-nvim: ${nvim_install_dir} ${packer_nvim_path} nvim-bootstrap-packer
+
+.PHONY: clean-nvim
+clean-nvim:
+	rm -rf \
+		${nvim_install_dir} \
+		${packer_nvim_path} \
+		${nvim_cache_file} \
+		${packer_nvim_cache}
+
+.PHONY: update-nvim # Force nvim update
+update-nvim: clean-nvim install-nvim
 # }}}
 
 # {{{ OhMyZsh

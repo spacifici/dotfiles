@@ -6,7 +6,7 @@ duty build server).
 
 ## Software
 
-Through the `Makefile` targets, the following software can be installed. See
+Trought the `Makefile` targets, the following softwares can be installed. See
 [Make targets](#make-targets) to check which target install which software.
 
 * **[FZF](https://github.com/junegunn/fzf)**  command-line fuzzy search with bash and zsh integration
@@ -30,6 +30,7 @@ Run `make <target>` where target is one of the following:
 * **install-fzf** installs fzf in ${HOME}/.local/bin
 * **install-ripgrep** installs ripgrep (rg) in ${HOME}/.local/bin (and its manpage)
 * **install-nvim** installs neovim in ${HOME}/opt
+* **update-nvim** Force nvim update
 * **install-oh-my-zsh** installs Oh My Zsh and the extra completion plugin
 * **install-rust** installs rust (via rustup)
 * **install-sdkman** installs SDKMAN
@@ -63,3 +64,4 @@ the `install-nvim` Makefile target.
 * **[tiagofumo/vim-nerdtree-syntax-highlight](https://github.com/tiagofumo/vim-nerdtree-syntax-highlight)**  Syntax highlighting for NERDTree
 * **[PhilRunninger/nerdtree-visual-selection](https://github.com/PhilRunninger/nerdtree-visual-selection)**  Action on selected files
 * **[iamcco/markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim)**  Markdown preview in the Browser
+* **[nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)**  Treesitter
