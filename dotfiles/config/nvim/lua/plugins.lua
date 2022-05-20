@@ -16,6 +16,7 @@ return require('packer').startup(function()
     use 'simrat39/rust-tools.nvim' -- It makes Rust development easier
 
     use 'junegunn/fzf' -- FZF integration
+    use 'junegunn/fzf.vim'
 
     use 'christoomey/vim-tmux-navigator' -- Easier navigation between Neovim windows and TMUX panels
 
