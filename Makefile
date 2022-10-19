@@ -1,9 +1,9 @@
 executables:=curl gunzip tar sha1sum git zip unzip
-fzf_version:=0.29.0
-neovim_version:=v0.7.0
+fzf_version:=0.34.0
+neovim_version:=v0.8.0
 rg_version:=13.0.0
-rust_analyzer_version:=2021-12-27
-nvm_version:=v0.39.1
+rust_analyzer_version:=2022-10-17
+nvm_version:=v0.39.2
 
 makedir:=$(shell cd $(shell dirname $(MAKEFILE_LIST));pwd)
 scriptsdir:=$(makedir)/scripts
