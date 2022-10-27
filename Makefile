@@ -251,25 +251,17 @@ install-rustup:
 # * https://rust-analyzer.github.io
 # * an implementation of Language Server Protocol for the Rust programming
 # * language that provides features like completion and goto definition for
-# * many code editors
+# * many code editors. We install it via mason
 # */
-rust_analyzer_url:=https://github.com/rust-analyzer/rust-analyzer/releases/download/${rust_analyzer_version}/rust-analyzer-x86_64-unknown-linux-gnu.gz
-rust_analyzer_cache_file:=${cachedir}/rust-analyzer.gz
-rust_analyzer_dst:=${HOME}/.local/bin/rust-analyzer
-
-.SECONDARY: ${rust_analyzer_cache_file}
-${rust_analyzer_cache_file}:
-	curl -L ${rust_analyzer_url} -o $@
-
-${rust_analyzer_dst}: dstdir=$(shell dirname ${rust_analyzer_dst})
-${rust_analyzer_dst}: ${rust_analyzer_cache_file}
-	mkdir -p ${dstdir}
-	gzip -c -d $< > $@
-	chmod 740 $@
+.PHONY: install-rust-analyzer
+install-rust-analyzer:
+	${nvim_install_dir}/bin/nvim --headless \
+		-c 'MasonInstall rust-analyzer' \
+		-c 'qall'
 # }}}
 
 .PHONY: install-rust # installs rust (via rustup)
-install-rust: install-rustup ${rust_analyzer_dst}
+install-rust: install-rustup install-rust-analyzer
 # }}}
 
 # {{{ SDKMAN (optional)

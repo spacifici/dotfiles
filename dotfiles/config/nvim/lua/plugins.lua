@@ -47,4 +47,7 @@ return require('packer').startup(function()
         run = function() vim.cmd('TSUpdate') end
     }
 
+    use 'williamboman/mason.nvim' -- Install and manage LSP Servers, debuggers, and linters
+    use 'williamboman/mason-lspconfig.nvim' -- Mason goodies
+
 end)

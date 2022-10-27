@@ -58,6 +58,9 @@ u.augroup('filetype_tab_expansion', {
     'FileType markdown setlocal spell',
 })
 
+-- Mason setup
+require("mason").setup()
+
 -- Language Servers
 local lsp=require'lspconfig'
 lsp.rust_analyzer.setup{}

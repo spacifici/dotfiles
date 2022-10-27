@@ -5,7 +5,7 @@ RUN apt-get update && \
         curl \
         git \
         locales \
-        make \
+        build-essential \
         tmux \
         unzip \
         zip \
