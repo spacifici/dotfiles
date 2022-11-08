@@ -6,10 +6,12 @@ return require('packer').startup(function()
     use {
         'hrsh7th/nvim-cmp', -- Completion support
         requires = {
+            'hrsh7th/cmp-nvim-lua', -- Completion for Lua
             'hrsh7th/cmp-nvim-lsp', -- Completion from LSP
+            'hrsh7th/cmp-nvim-lsp-signature-help', -- Completion with signatures
             'hrsh7th/vim-vsnip', -- VSCode snippets completion
-            'hrsh7th/cmp-buffer', -- Completion from buffer content
             'hrsh7th/cmp-path', -- File path completion
+            'hrsh7th/cmp-buffer', -- Completion from buffer content
         }
     }
 

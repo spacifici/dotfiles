@@ -21,4 +21,12 @@ function M.augroup(name, ...)
     cmd('augroup END')
 end
 
+function M.sign(opts)
+    vim.fn.sign_define(opts.name, {
+        texthl = opts.name,
+        text = opts.text,
+        numhl = ''
+    })
+end
+
 return M

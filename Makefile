@@ -149,6 +149,7 @@ $(if $(subst x86_64,,${arch}),$(error "Arch not supported: ${arch}"),linux64)))
 nvim_release_url:=https://github.com/neovim/neovim/releases/download/${neovim_version}/nvim-${nvim_os_arch}.tar.gz
 nvim_install_dir:=${optdir}/nvim-${nvim_os_arch}
 nvim_cache_file:=${cachedir}/nvim-${neovim_version}.tgz
+nvim_bin:=${nvim_install_dir}/bin/nvim
 
 .SECONDARY: ${nvim_cache_file}
 ${nvim_cache_file}:
@@ -174,7 +175,7 @@ ${packer_nvim_path}: ${packer_nvim_cache}
 
 .PHONY: nvim-bootstrap-packer
 nvim-bootstrap-packer:
-	${nvim_install_dir}/bin/nvim -u NONE --headless \
+	${nvim_bin} -u NONE --headless \
 		-c 'autocmd User PackerComplete quitall' \
 		-c 'source ${makedir}/dotfiles/config/nvim/lua/plugins.lua' \
 		-c 'PackerSync'
@@ -253,15 +254,17 @@ install-rustup:
 # * language that provides features like completion and goto definition for
 # * many code editors. We install it via mason
 # */
-.PHONY: install-rust-analyzer
-install-rust-analyzer:
-	${nvim_install_dir}/bin/nvim --headless \
-		-c 'MasonInstall rust-analyzer' \
-		-c 'qall'
+.PHONY: install-rust-neovim-support
+install-rust-neovim-support:
+	[ -f ${nvim_bin} ] && \
+	${nvim_bin} --headless \
+		-c 'MasonInstall rust-analyzer codelldb' \
+		-c 'qall' || \
+	true
 # }}}
 
 .PHONY: install-rust # installs rust (via rustup)
-install-rust: install-rustup install-rust-analyzer
+install-rust: install-rustup install-rust-neovim-support
 # }}}
 
 # {{{ SDKMAN (optional)

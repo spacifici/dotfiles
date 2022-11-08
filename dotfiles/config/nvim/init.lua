@@ -52,6 +52,7 @@ u.colorscheme('seoul256')
 g.airline_powerline_fonts = 1
 g['airline#extensions#tabline#enabled'] = 1
 
+-- Filetype dependant options
 u.augroup('filetype_tab_expansion', { 
     'FileType make,sh,gitconfig setlocal noexpandtab|set foldmethod=marker',
     'FileType javascript,json,yaml setlocal tabstop=2|setlocal shiftwidth=2',
@@ -61,49 +62,50 @@ u.augroup('filetype_tab_expansion', {
 -- Mason setup
 require("mason").setup()
 
--- Language Servers
-local lsp=require'lspconfig'
-lsp.rust_analyzer.setup{}
-lsp.pylsp.setup{}
-
--- {{{ The following config is taken from https://sharksforarms.dev/posts/neovim-rust/
-o.completeopt="menuone,noinsert,noselect"
-o.shortmess=o.shortmess..'c'
-
--- Setting up rust-tools
-require('rust-tools').setup({
-    tools = { -- rust-tools options
-        autoSetHints = true,
-        inlay_hints = {
-            show_parameter_hints = false,
-            parameter_hints_prefix = "",
-            other_hints_prefix = "",
-        },
-    },
-
-    -- all the opts to send to nvim-lspconfig
-    -- these override the defaults set by rust-tools.nvim
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+-- {{{ rust-tools setup
+require("rust-tools").setup({
     server = {
-        -- on_attach is a callback called when the language server attachs to the buffer
-        -- on_attach = on_attach,
-        settings = {
-            -- to enable rust-analyzer settings visit:
-            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-            ["rust-analyzer"] = {
-                -- enable clippy on save
-                checkOnSave = {
-                    command = "clippy"
-                },
-            }
-        }
+        on_attach = function(_, bufnr)
+            -- Hover actions
+            vim.keymap.set("n", "<C-a>", rt.hover_actions.hover_actions, { buffer = bufnr })
+            -- Code action groups
+            vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+        end,
+    },
+})
+-- }}}
+
+-- {{{ LSP Diagnostics Options setup
+u.sign({name = 'DiagnosticSignError', text = ''})
+u.sign({name = 'DiagnosticSignWarn', text = ''})
+u.sign({name = 'DiagnosticSignHint', text = ''})
+u.sign({name = 'DiagnosticSignInfo', text = ''})
+
+vim.diagnostic.config({
+    virtual_text = false,
+    signs = true,
+    update_in_insert = true,
+    underline = true,
+    severity_sort = false,
+    float = {
+        border = 'rounded',
+        source = 'always',
+        header = '',
+        prefix = '',
     },
 })
 
-require('rust-tools').setup(opts)
+vim.cmd([[
+set signcolumn=yes
+autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+]])
 -- }}}
 
 -- {{{ Completion setup
+vim.opt.completeopt = {'menuone', 'noselect', 'noinsert'}
+vim.opt.shortmess = vim.opt.shortmess + { c = true}
+vim.api.nvim_set_option('updatetime', 300) 
+
 local cmp = require'cmp'
 cmp.setup({
     -- Enable LSP snippets
@@ -129,19 +131,49 @@ cmp.setup({
     },
     -- Installed sources
     sources = {
-        { name = 'nvim_lsp' },
-        { name = 'vsnip' },
         { name = 'path' },
-        { name = 'buffer' },
+        { name = 'nvim_lsp', keyword_length = 3 },
+        { name = 'nvim_lsp_signature_help' },
+        { name = 'nvim_lua', keyword_length = 2 },
+        { name = 'buffer', keyword_length = 2 },
+        { name = 'vsnip', keyword_length = 2 },
+        { name = 'calc' },
+    },
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
+    formatting = {
+        fields = {'menu', 'abbr', 'kind'},
+        format = function(entry, item)
+            local menu_icon ={
+                nvim_lsp = 'λ',
+                vsnip = '⋗',
+                buffer = 'Ω',
+                path = '🖫',
+            }
+            item.menu = menu_icon[entry.source.name]
+            return item
+        end,
     },
 })
 -- }}}
 
 -- {{{ Treesitter
 require 'nvim-treesitter.configs'.setup {
-    ensure_installed = { 'rust', 'bash', 'python', 'javascript' },
+    ensure_installed = { 'bash', 'javascript', 'lua', 'python', 'rust', 'toml' },
+    auto_install = true,
     highlight = {
         enable = true
-    }
+    },
+    indent = { enable = true },
+    rainbow = {
+        enable = true,
+        extended_mode = true,
+        max_file_lines = nil,
+    },
 }
+
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 -- }}}
