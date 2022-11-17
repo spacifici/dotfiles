@@ -80,6 +80,9 @@ if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] {
 }
 autoload -U compinit && compinit
 
+# Enable ssh agent forwarding
+zstyle :omz:plugins:ssh-agent agent-forwarding yes
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
