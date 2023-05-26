@@ -14,7 +14,7 @@ Trought the `Makefile` targets, the following softwares can be installed. See
 * **[Neovim](https://neovim.io)**  a Vim-based text editor engineered for extensibility and usability
 * **[OhMyZsh](https://ohmyz.sh)**  a delightful, open source, community-driven framework for managing your zsh configuration
 * **[rustup](https://rustup.rs)**  installs The Rust Programming Language from the official release channels, enabling you to easily switch between stable, beta, and nightly compilers and keep them updated
-* **[rust-analyzer](https://rust-analyzer.github.io)**  an implementation of Language Server Protocol for the Rust programming language that provides features like completion and goto definition for many code editors
+* **[rust-analyzer](https://rust-analyzer.github.io)**  an implementation of Language Server Protocol for the Rust programming language that provides features like completion and goto definition for many code editors. We install it via mason
 * **[SDKMAN](https://sdkman.io)**  a tool for managing parallel versions of multiple Software Development Kits on most Unix based systems
 * **[Node Version Manager](https://github.com/nvm-sh/nvm-sh)**  a version manager for node.js, designed to be installed per-user, and invoked per-shell
 
@@ -46,12 +46,13 @@ Neovim configuration comes with the following plugins listed in
 the `install-nvim` Makefile target.
 
 * **[wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)**  Plugins management
-* **[neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)**  Neovim LSP configuration
 * **[hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)**  Completion support
+* **[hrsh7th/cmp-nvim-lua](https://github.com/hrsh7th/cmp-nvim-lua)**  Completion for Lua
 * **[hrsh7th/cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp)**  Completion from LSP
+* **[hrsh7th/cmp-nvim-lsp-signature-help](https://github.com/hrsh7th/cmp-nvim-lsp-signature-help)**  Completion with signatures
 * **[hrsh7th/vim-vsnip](https://github.com/hrsh7th/vim-vsnip)**  VSCode snippets completion
-* **[hrsh7th/cmp-buffer](https://github.com/hrsh7th/cmp-buffer)**  Completion from buffer content
 * **[hrsh7th/cmp-path](https://github.com/hrsh7th/cmp-path)**  File path completion
+* **[hrsh7th/cmp-buffer](https://github.com/hrsh7th/cmp-buffer)**  Completion from buffer content
 * **[simrat39/rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)**  It makes Rust development easier
 * **[junegunn/fzf](https://github.com/junegunn/fzf)**  FZF integration
 * **[christoomey/vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator)**  Easier navigation between Neovim windows and TMUX panels
@@ -65,3 +66,6 @@ the `install-nvim` Makefile target.
 * **[PhilRunninger/nerdtree-visual-selection](https://github.com/PhilRunninger/nerdtree-visual-selection)**  Action on selected files
 * **[iamcco/markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim)**  Markdown preview in the Browser
 * **[nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)**  Treesitter
+* **[williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)**  Install and manage LSP Servers, debuggers, and linters
+* **[williamboman/mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim)**  Mason goodies
+* **[neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)**  Neovim LSP configuration
