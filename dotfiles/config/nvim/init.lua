@@ -61,6 +61,15 @@ u.augroup('filetype_tab_expansion', {
 
 -- Mason setup
 require("mason").setup()
+local mason_lspconfig = require("mason-lspconfig")
+local lspconfig = require('lspconfig')
+
+mason_lspconfig.setup()
+mason_lspconfig.setup_handlers {
+    function (server_name)
+        lspconfig[server_name].setup{}
+    end
+}
 
 -- {{{ rust-tools setup
 require("rust-tools").setup({
@@ -132,7 +141,7 @@ cmp.setup({
     -- Installed sources
     sources = {
         { name = 'path' },
-        { name = 'nvim_lsp', keyword_length = 3 },
+        { name = 'nvim_lsp', keyword_length = 2 },
         { name = 'nvim_lsp_signature_help' },
         { name = 'nvim_lua', keyword_length = 2 },
         { name = 'buffer', keyword_length = 2 },

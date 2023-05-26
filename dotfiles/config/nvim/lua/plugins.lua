@@ -1,8 +1,6 @@
 return require('packer').startup(function()
     use 'wbthomason/packer.nvim' -- Plugins management
 
-    use 'neovim/nvim-lspconfig' -- Neovim LSP configuration
-
     use {
         'hrsh7th/nvim-cmp', -- Completion support
         requires = {
@@ -51,5 +49,7 @@ return require('packer').startup(function()
 
     use 'williamboman/mason.nvim' -- Install and manage LSP Servers, debuggers, and linters
     use 'williamboman/mason-lspconfig.nvim' -- Mason goodies
+
+    use 'neovim/nvim-lspconfig' -- Neovim LSP configuration
 
 end)
