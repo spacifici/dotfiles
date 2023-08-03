@@ -1,6 +1,6 @@
 executables:=curl gunzip tar sha1sum git zip unzip
 fzf_version:=0.34.0
-neovim_version:=v0.9.0
+neovim_version:=v0.9.1
 rg_version:=13.0.0
 rust_analyzer_version:=2022-10-17
 nvm_version:=v0.39.2
@@ -159,30 +159,8 @@ ${nvim_install_dir}: ${nvim_cache_file}
 	mkdir -p ${optdir}
 	tar xf $< -C ${optdir}
 
-# {{{ packer.nvim
-packer_nvim_repo="https://github.com/wbthomason/packer.nvim"
-packer_nvim_path="${HOME}/.local/share/nvim/site/pack/packer/start/packer.nvim"
-packer_nvim_cache=${cachedir}/packer.vim
-
-.SECONDARY: ${packer_nvim_cache}
-${packer_nvim_cache}:
-	git clone --depth 1 ${packer_nvim_repo} $@
-
-${packer_nvim_path}: dstdir=$(shell dirname ${packer_nvim_path})
-${packer_nvim_path}: ${packer_nvim_cache}
-	mkdir -p ${dstdir}
-	cp -a $< $@
-
-.PHONY: nvim-bootstrap-packer
-nvim-bootstrap-packer:
-	${nvim_bin} -u NONE --headless \
-		-c 'autocmd User PackerComplete quitall' \
-		-c 'source ${makedir}/dotfiles/config/nvim/lua/plugins.lua' \
-		-c 'PackerSync'
-# }}}
-
 .PHONY: install-nvim # installs neovim in ${HOME}/opt
-install-nvim: ${nvim_install_dir} ${packer_nvim_path} nvim-bootstrap-packer
+install-nvim: ${nvim_install_dir}
 
 .PHONY: clean-nvim
 clean-nvim:
